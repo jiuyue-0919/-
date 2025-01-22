@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>文案优化工具</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f5f5f5;
+            line-height: 1.6;
+            padding: 16px;
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        .container {
+            background: #fff;
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin: 0 auto;
+            max-width: 600px;
+        }
+
+        h1 {
+            font-size: 20px;
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-bottom: 16px;
+            resize: none;
+            -webkit-appearance: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            color: #fff;
+            background: #007AFF;
+            margin-bottom: 12px;
+            -webkit-appearance: none;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        button:active {
+            opacity: 0.8;
+        }
+
+        .result {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 16px;
+            font-size: 14px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            display: none;
+        }
+
+        .copy-btn {
+            background: #34C759;
+            display: none;
+        }
+
+        .tips {
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+            margin-top: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>文案优化工具</h1>
+        <textarea id="inputText" placeholder="请输入原始文案（包含表情符号的内容）"></textarea>
+        <button onclick="processText()">生成优化文案</button>
+        <div id="result" class="result"></div>
+        <button id="copyBtn" class="copy-btn" onclick="copyResult()">复制结果</button>
+        <div class="tips">提示：点击生成按钮后，可以直接复制处理好的文案</div>
+    </div>
+
+    <script>
+        // 移除表情符号
+        function removeEmojis(text) {
+            return text.replace(/[\u{1F300}-\u{1F9FF}]|[\u{2600}-\u{26FF}]/gu, '');
+        }
+
+        // 处理文本
+        function processText() {
+            const text = document.getElementById('inputText').value;
+            if (!text) {
+                alert('请输入需要处理的文案');
+                return;
+            }
+
+            // 移除表情符号并保持原文格式
+            const cleanText = removeEmojis(text);
+            
+            // 生成结果
+            const result = `${cleanText}
+
+♥︎购买流程♥︎
+1--就餐时咨询，点击"聊一聊"
+2--告诉我所在门店，沟通确认后再下单；
+3--下单发核销二维码，结账核销；
+4--使用后请及时确认收货谢谢！♥︎
+5--★结帐以前再下单★，不要提前购买。二维码商品为特殊商品，非券码问题，售出后若退款则扣除10%手续费！`;
+
+            // 显示结果
+            const resultDiv = document.getElementById('result');
+            resultDiv.textContent = result;
+            resultDiv.style.display = 'block';
+            
+            // 显示复制按钮
+            document.getElementById('copyBtn').style.display = 'block';
+        }
+
+        // 复制结果
+        function copyResult() {
+            const result = document.getElementById('result');
+            
+            // 创建临时文本区域
+            const textArea = document.createElement('textarea');
+            textArea.value = result.textContent;
+            document.body.appendChild(textArea);
+            
+            // 选择并复制文本
+            textArea.select();
+            document.execCommand('copy');
+            
+            // 移除临时文本区域
+            document.body.removeChild(textArea);
+            
+            // 显示提示
+            alert('已复制到剪贴板！');
+        }
+    </script>
+</body>
+</html> 
